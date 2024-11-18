@@ -57,9 +57,10 @@ export class UsersController {
   }
   @Post()
   async create(@Body() usersDto: UsersDto): Promise<Users> {
-    const createdUser = new this.usersService.userModel(usersDto);
-    return createdUser.save();
-  }
+    try {
+      const createdUser = new this.usersService.userModel(usersDto);
+      return createdUser.save();
+    }}
 
   @Put(':id')
   async update(
