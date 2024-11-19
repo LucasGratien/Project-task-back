@@ -36,7 +36,7 @@ export class UsersController {
     @Param('id') id: string,
     @Body() usersDto: UsersDto,
   ): Promise<Users> {
-    return this.usersService.update(id, usersDto);
+    return this.usersService.update();
   }
 
   @Delete(':id')
