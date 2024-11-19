@@ -15,9 +15,15 @@ export class UsersService {
   async findAll(): Promise<Users[]> {
     return this.userModel.find().exec();
   }
-  async update(): Promise<Users> {
-    return this.userModel.updateOne();
+  async remove() {
+    return this.userModel.find().exec();
   }
+  async update(id: string, updateData: Partial<Users>): Promise<Users | null> {
+    return this.userModel
+      .findByIdAndUpdate(id, updateData, { new: true, runValidators: true })
+      .exec();
+  }
+
   async findOne(id: string): Promise<Users | null> {
     return this.userModel.findById(id).exec();
   }
