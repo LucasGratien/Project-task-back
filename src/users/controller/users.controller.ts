@@ -33,7 +33,6 @@ export class UsersController {
     }
     return user;
   }
-
   @Post()
   async create(@Body() usersDto: UsersDto): Promise<Users> {
     const createdUser = new this.usersService.userModel(usersDto);
@@ -48,11 +47,16 @@ export class UsersController {
     @Param('id') id: string,
     @Body() usersDto: UsersDto,
   ): Promise<Users> {
-    return this.usersService.update();
+    const updatedUser = await this.usersService.update(id, usersDto);
+    if (!updatedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return updatedUser;
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(id);
+    await this.usersService.remove(id);
+    return;
   }
 }
