@@ -8,9 +8,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { UsersDto } from '../users/dto/users.dto';
-import { UsersService } from '../users/service/users.service';
-import { Users } from '../users/schema/users.schema';
+import { UsersDto } from '../dto/users.dto';
+import { UsersService } from '../service/users.service';
+import { Users } from '../schema/users.schema';
 
 @Controller('users')
 export class UsersController {
@@ -37,6 +37,9 @@ export class UsersController {
   @Post()
   async create(@Body() usersDto: UsersDto): Promise<Users> {
     const createdUser = new this.usersService.userModel(usersDto);
+    if (!createdUser) {
+      throw new NotFoundException('add user fail');
+    }
     return createdUser.save();
   }
 
